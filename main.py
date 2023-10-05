@@ -86,7 +86,6 @@ while True:
         if counter ==1:
             # GetData
             studentInfo = db.reference(f'Truckers/{id}').get()
-            print(studentInfo)
 
             #Get Image
             blob = bucket.get_blob(f'Images/{id}.png')
@@ -94,15 +93,11 @@ while True:
             imgStudent = cv2.imdecode(array, cv2.COLOR_BGRA2BGR)
 
             # Update date of login
-            datetimeObject = datetime.strptime(studentInfo['Data_de_registro'],
-                                              "%Y-%m-%d %H:%M:%S")
-            secondsElapsed = (datetime.now()-datetimeObject).total_seconds()
-            print(secondsElapsed)
-
             ref = db.reference(f'Truckers/{id}')
             studentInfo['logins'] +=1
             ref.child('logins').set(studentInfo['logins'])
-            ref.child('Data_de_registro').set(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            ref.child('dataRegistro').set(datetime.now().isoformat())
+            print(f"\nUsuário registrado!\nNome: {studentInfo['nome']}\nCPF: {studentInfo['cpf']}\nCNH: {studentInfo['cnh']}\nData do registro: {datetime.now().isoformat()}")
 
         if 10<counter<20:
             modeType = 2
@@ -110,9 +105,9 @@ while True:
         if counter<=10:
             cv2.putText(imgBackground, str(studentInfo['nome']),(808,445),
                 cv2.FONT_HERSHEY_COMPLEX, 1,(50,50,50),1)
-            cv2.putText(imgBackground, str(studentInfo['rg']),(1006,493),
+            cv2.putText(imgBackground, str(studentInfo['cpf']),(1006,493),
                 cv2.FONT_HERSHEY_COMPLEX, 0.5,(255,255,255),1)
-            cv2.putText(imgBackground, str(studentInfo['carteiraMotorista']),(1006,550),
+            cv2.putText(imgBackground, str(studentInfo['cnh']),(1006,550),
                 cv2.FONT_HERSHEY_COMPLEX, 0.5,(255,255,255),1)
 
 

@@ -28,11 +28,12 @@ for id in ref:
     fileName = f'Images/{id}.png'
     bucket = storage.bucket()
     blob = bucket.blob(fileName)
-    blob.download_to_filename(f'Images/{id}.png')
 
-    imgList.append(cv2.imread(os.path.join('Images',f'{id}.png'))) 
-    blob.upload_from_filename(fileName)
-    truckersId.append(id)
+    if(blob.exists()):
+        blob.download_to_filename(f'Images/{id}.png')
+        imgList.append(cv2.imread(os.path.join('Images',f'{id}.png'))) 
+        blob.upload_from_filename(fileName)
+        truckersId.append(id)
 
 print("Importandos as imagens para a pasta...\n", "Ids:", truckersId)
 
