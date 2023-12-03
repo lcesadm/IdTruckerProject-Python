@@ -99,7 +99,7 @@ while True:
             ref.child('dataRegistro').set(datetime.now().isoformat())
             print(f"\nUsuário registrado!\nNome: {studentInfo['nome']}\nCPF: {studentInfo['cpf']}\nCNH: {studentInfo['cnh']}\nData do registro: {datetime.now().isoformat()}")
 
-        if 10<counter<20:
+        if 10<counter<200:
             modeType = 2
         imgBackground[44:44 + 631, 808:808 + 415] = imgModeList[modeType]
         if counter<=10:
@@ -116,7 +116,7 @@ while True:
 
         counter +=1
 
-        if counter>=20:
+        if counter>=200:
             counter = 0
             modeType = 0
             studentInfo = []
